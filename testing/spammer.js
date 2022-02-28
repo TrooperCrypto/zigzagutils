@@ -123,8 +123,13 @@ async function getQuotes() {
     const marketId = MARKET_ALIAS[marketNumber];
     const marketInfo = MARKETS[marketId];
     const side = (Math.random() > 0.5) ? 'b' : 's';
-    const minSize = marketInfo.minSize;
-    const maxSize = minSize * 25;
+    let minSize = 0;
+    if(side === 's') {
+        minSize = marketInfo.baseFee;
+    } else {
+        minSize = marketInfo.quoteFee;
+    }
+    const maxSize = minSize * 100;
     const randomAmount = (Math.random() * (maxSize- minSize)) + minSize;
     let amount = 0;
     if(side == 's') {
